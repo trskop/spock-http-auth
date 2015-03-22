@@ -2,11 +2,13 @@ name:                   spock-http-auth
 version:                0.1.0.0
 synopsis:               HTTP authentication framework for Spock
 -- description:
+homepage:               https://github.com/trskop/spock-http-auth
+bug-reports:            https://github.com/trskop/spock-http-auth/issues
 license:                BSD3
 license-file:           LICENSE
 author:                 Peter Trško
 maintainer:             peter.trsko@gmail.com
--- copyright:
+copyright:              Copyright (c) 2015, Peter Trško
 category:               Network
 build-type:             Simple
 -- extra-source-files:
