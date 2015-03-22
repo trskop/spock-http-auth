@@ -82,7 +82,7 @@ basicAuthFailed :: MonadIO m => Text -> ActionT m a
 basicAuthFailed realm = do
     setStatus unauthorized401
     setHeader "WWW-Authenticate" $ "Basic realm=\"" <> realm <> "\""
-    text "Authentication required."
+    text "401 Unauthorized"
 
 parseBasicAuth :: AuthScheme -> Text -> Maybe (Text, Text)
 parseBasicAuth authScheme = case authScheme of
