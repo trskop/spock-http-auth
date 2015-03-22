@@ -1,7 +1,16 @@
-{-# LANGUAGE DeriveDataTypeable #-}
-{-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE NoImplicitPrelude #-}
 {-# LANGUAGE OverloadedStrings #-}
-{-# LANGUAGE TupleSections #-}
+-- |
+-- Module:       $HEADER$
+-- Description:  HTTP authentication framework for Spock
+-- Copyright:    (c) 2015 Peter Trško
+-- License:      BSD3
+--
+-- Maintainer:   peter.trsko@gmail.com
+-- Stability:    experimental
+-- Portability:  NoImplicitPrelude, OverloadedStrings
+--
+-- HTTP authentication framework for Spock.
 module Web.Spock.HttpAuth
    (
      AuthScheme(..)
@@ -13,18 +22,14 @@ module Web.Spock.HttpAuth
    )
   where
 
-import Control.Applicative (liftA2)
-import Control.Arrow (Arrow((***), second), (<<<))
-import Control.Monad (liftM)
-import Data.Data (Data)
-import Data.Functor ((<$>))
+import Control.Arrow (Arrow(second))
+import Control.Monad ((=<<), liftM)
+import Data.Eq (Eq((==)))
+import Data.Function ((.), ($), const)
+import Data.Maybe (Maybe(Just, Nothing))
 import Data.Monoid ((<>))
-import Data.Typeable (Typeable)
-import GHC.Generics (Generic)
 
 import Control.Monad.Trans (MonadIO, MonadTrans(lift))
-import Data.CaseInsensitive (CI)
-import qualified Data.CaseInsensitive as CI
 import Data.Text (Text)
 import qualified Data.Text as Text (break, drop, strip)
 import qualified Data.Text.Encoding as Text (decodeUtf8, encodeUtf8)
