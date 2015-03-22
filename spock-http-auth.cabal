@@ -11,8 +11,16 @@ maintainer:             peter.trsko@gmail.com
 copyright:              Copyright (c) 2015, Peter Trško
 category:               Network
 build-type:             Simple
--- extra-source-files:
 cabal-version:          >=1.10
+
+extra-source-files:
+    ChangeLog.md
+  , README.md
+
+flag pedantic
+  description:          Pass additional warning flags to GHC.
+  default:              False
+  manual:               True
 
 library
   hs-source-dirs:       src
@@ -40,3 +48,11 @@ library
     , base64-bytestring >=1.0
     , http-types >=0.8
     , Spock >= 0.7.2.0 && < 0.8
+
+  ghc-options:          -Wall
+  if flag(pedantic)
+    ghc-options:
+      -fwarn-tabs
+      -fwarn-implicit-prelude
+      -fwarn-missing-import-lists
+--    -Werror
