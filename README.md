@@ -18,6 +18,11 @@ HTTP authentication is not limited to those defined by the standard:
 This library provides building block for developers to build their own
 authentication schemes on top of standard HTTP vocabulary.
 
+Examples of alternative HTTP authentication schemes:
+
+* [Amazon S3: Signing and Authenticating REST Requests][]
+* [NTLM Authentication Scheme for HTTP][]
+
 
 
 [Haskell.org]:
@@ -32,4 +37,9 @@ authentication schemes on top of standard HTTP vocabulary.
 [Wikipedia: Digest access authentication]:
   https://en.wikipedia.org/wiki/Digest_access_authentication
   "Wikipedia: Digest access authentication"
-
+[Amazon S3: Signing and Authenticating REST Requests]:
+  http://docs.aws.amazon.com/AmazonS3/latest/dev/RESTAuthentication.html
+  "Amazon S3: Signing and Authenticating REST Requests"
+[NTLM Authentication Scheme for HTTP]:
+  http://www.innovation.ch/personal/ronald/ntlm.html
+  "NTLM Authentication Scheme for HTTP"
