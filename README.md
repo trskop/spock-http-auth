@@ -13,7 +13,7 @@ HTTP authentication is not limited to those defined by the standard:
 * [HTTP Basic Authentication][Wikipedia: Basic access authentication]
 * [HTTP Digest Authentication][Wikipedia: Digest access authentication]
 
-This library provides building block for developers to build their own
+This library provides building block for developers to create their own
 authentication schemes on top of standard HTTP vocabulary.
 
 Examples of alternative HTTP authentication schemes:

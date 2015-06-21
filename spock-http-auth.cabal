@@ -8,7 +8,7 @@ description:
   .
   * <https://en.wikipedia.org/wiki/Digest_access_authentication Digest HTTP Authentication>
   .
-  This library provides building block for developers to build their own
+  This library provides building block for developers to create their own
   authentication schemes on top of standard HTTP vocabulary.
   .
   Examples of alternative HTTP authentication schemes:
