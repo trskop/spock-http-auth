@@ -48,7 +48,7 @@ library
     , TupleSections
 
   build-depends:
-    , base>=4.6 && <5
+      base >=4.6 && <5
     -- ^ This constraint was taken from some of the Spock dependencies, e.g.
     -- reroute 0.2.2. Package reroute never allowed base < 4.5, so that would
     -- be a moot point. As a consequence this will not be running on GHC <=7.4.
