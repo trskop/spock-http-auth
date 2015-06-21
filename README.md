@@ -1,5 +1,4 @@
-HTTP Authentication Framework for Spock
-=======================================
+# HTTP Authentication Framework for Spock
 
 [![Haskell Programming Language](https://img.shields.io/badge/language-Haskell-blue.svg)][Haskell.org]
 [![BSD3 License](http://img.shields.io/badge/license-BSD3-brightgreen.svg)][tl;dr Legal: BSD3]
@@ -7,8 +6,7 @@ HTTP Authentication Framework for Spock
 [![Build Status](https://travis-ci.org/trskop/spock-http-auth.svg)](https://travis-ci.org/trskop/spock-http-auth)
 
 
-Description
------------
+## Description
 
 HTTP authentication is not limited to those defined by the standard:
 
@@ -23,6 +21,19 @@ Examples of alternative HTTP authentication schemes:
 * [Amazon S3: Signing and Authenticating REST Requests][]
 * [NTLM Authentication Scheme for HTTP][]
 
+
+## License
+
+Revised BSD License, also known as 3-clause BSD license. For more
+information see e.g. [tl;drLegal: BSD 3-Clause License (Revised)
+][tl;dr Legal: BSD3] and for full license text read [LICENSE
+](https://github.com/trskop/spock-http-auth/blob/master/LICENSE) file.
+
+
+## Contributions
+
+Contributions, pull requests and bug reports are welcome! Please don't be
+afraid to contact author using GitHub or by e-mail.
 
 
 [Haskell.org]:
