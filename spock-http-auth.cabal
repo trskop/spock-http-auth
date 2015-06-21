@@ -1,7 +1,16 @@
 name:                   spock-http-auth
 version:                0.1.0.0
 synopsis:               HTTP authentication framework for Spock
--- description:
+description:
+  HTTP authentication is not limited to those defined by the standard:
+  .
+  * <https://en.wikipedia.org/wiki/Basic_access_authentication Basic>
+  .
+  * <https://en.wikipedia.org/wiki/Digest_access_authentication Digest>
+  .
+  This library provides building block for developers to build their own
+  authentication schemes on top of standard HTTP vocabulary.
+
 homepage:               https://github.com/trskop/spock-http-auth
 bug-reports:            https://github.com/trskop/spock-http-auth/issues
 license:                BSD3
