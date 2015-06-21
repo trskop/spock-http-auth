@@ -1,3 +1,4 @@
+{-# LANGUAGE CPP #-}
 {-# LANGUAGE NoImplicitPrelude #-}
 {-# LANGUAGE OverloadedStrings #-}
 -- |
@@ -8,7 +9,7 @@
 --
 -- Maintainer:   peter.trsko@gmail.com
 -- Stability:    experimental
--- Portability:  NoImplicitPrelude, OverloadedStrings
+-- Portability:  CPP, NoImplicitPrelude, OverloadedStrings
 --
 -- HTTP authentication framework for Spock.
 module Web.Spock.HttpAuth
@@ -22,8 +23,16 @@ module Web.Spock.HttpAuth
    )
   where
 
+#if APPLICATIVE_MONAD
+import Control.Applicative ((<$>))
+#endif
 import Control.Arrow (Arrow(second))
-import Control.Monad ((=<<), liftM)
+import Control.Monad
+    ( (=<<)
+#if !APPLICATIVE_MONAD
+    , liftM
+#endif
+    )
 import Data.Eq (Eq((==)))
 import Data.Function ((.), ($), const)
 import Data.Maybe (Maybe(Just, Nothing))
@@ -74,7 +83,13 @@ requireAuth parseCred verifyCred onAuthFailed action = do
                     Just info -> action info
   where
     authorizationHeader =
-        (parseAuthorizationHeaderValue =<<) `liftM` header "Authorization"
+        (parseAuthorizationHeaderValue =<<) <$> header "Authorization"
+
+#if !APPLICATIVE_MONAD
+    -- Trying hard to avoid adding unnecessary Applicative constraint, but its
+    -- starting to get ridiculous. Thank gods for AMP in GHC 7.10.
+    (<$>) = liftM
+#endif
 
 -- {{{ HTTP Basic Authentication ----------------------------------------------
 
