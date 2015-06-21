@@ -67,13 +67,12 @@ data AuthScheme
     | AuthDigest
     | AuthOther (CI Text)
   deriving
-#if MIN_VERSION_case_insensitive(1,2,0)
-    ( Data
-    , Eq
-#endif
     ( Eq
     , Generic
     , Show
+#if MIN_VERSION_case_insensitive(1,2,0)
+    , Data
+#endif
     , Typeable
     )
 
