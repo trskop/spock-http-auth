@@ -76,3 +76,7 @@ library
       -fwarn-implicit-prelude
       -fwarn-missing-import-lists
 --    -Werror
+
+source-repository head
+  type:                 git
+  location:             git://github.com/trskop/spock-http-auth.git
