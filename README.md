@@ -4,6 +4,8 @@ HTTP Authentication Framework for Spock
 [![Haskell Programming Language](https://img.shields.io/badge/language-Haskell-blue.svg)][Haskell.org]
 [![BSD3 License](http://img.shields.io/badge/license-BSD3-brightgreen.svg)][tl;dr Legal: BSD3]
 
+[![Build Status](https://travis-ci.org/trskop/spock-http-auth.svg)](https://travis-ci.org/trskop/spock-http-auth)
+
 
 
 [Haskell.org]:
