@@ -7,7 +7,7 @@
 -- |
 -- Module:       $HEADER$
 -- Description:  Generic HTTP authentication parsing and serialization
--- Copyright:    (c) 2015 Peter Trško
+-- Copyright:    (c) 2015, Peter Trško
 -- License:      BSD3
 --
 -- Maintainer:   peter.trsko@gmail.com
@@ -57,7 +57,7 @@ import qualified Data.Text as Text (all, break, dropWhile)
 -- but also considering possible extensions.
 --
 -- In example S3 from Amazon uses its own authentication shceme
--- <http://docs.aws.amazon.com/AmazonS3/latest/dev/RESTAuthentication.html>.
+-- <http://docs.aws.amazon.com/AmazonS3/latest/dev/RESTAuthentication.html Amazon S3: Signing and Authenticating REST Requests>.
 --
 -- One must not forget NTLM authentication, great summary can be found in article
 -- <http://www.innovation.ch/personal/ronald/ntlm.html NTLM Authentication Scheme for HTTP>
@@ -76,12 +76,24 @@ data AuthScheme
     , Typeable
     )
 
+-- | Get 'Text' representation of 'AuthScheme'. Result Basic and Digest
+-- Authentication Scheme is @\"Basic\"@ and @\"Digest\"@, respectively. For
+-- @'AuthOther' someAuth@ it is the value @someAuth@ unwrapped from 'CI'.
 showAuthScheme :: AuthScheme -> Text
 showAuthScheme AuthBasic          = "Basic"
 showAuthScheme AuthDigest         = "Digest"
 showAuthScheme (AuthOther scheme) = CI.original scheme
 
-serializeAuthorizationHeaderValue :: AuthScheme -> Text -> Text
+-- | Create value of @Authorization@ header. Implemented as:
+--
+-- @
+-- 'showAuthScheme' scheme '<>' \" \" '<>' credentials
+-- @
+serializeAuthorizationHeaderValue
+    :: AuthScheme
+    -> Text
+    -- ^ Credentials for the specified 'AuthScheme'.
+    -> Text
 serializeAuthorizationHeaderValue scheme credentials =
     showAuthScheme scheme <> " " <> credentials
 
