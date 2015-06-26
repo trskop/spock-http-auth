@@ -46,10 +46,10 @@ import qualified Data.Text.Encoding as Text (decodeUtf8, encodeUtf8)
 
 import Data.ByteString.Base64 as Base64 (decodeLenient)
 import Network.HTTP.Types.Status (unauthorized401)
-import Web.Spock.Shared
+import Web.Spock.Shared (ActionT, header, setHeader, setStatus, text)
 
 import Web.Spock.HttpAuth.Internal
-    ( AuthScheme(..)
+    ( AuthScheme(AuthBasic, AuthDigest, AuthOther)
     , parseAuthorizationHeaderValue
     )
 
