@@ -64,7 +64,9 @@ library
 
     , base64-bytestring >=1.0
     , http-types >=0.8
-    , Spock >= 0.7.2.0 && < 0.8
+    , Spock >= 0.7.2.0 && < 0.11
+    -- ^ Since version 0.9.0.0 ActionT was superseded by ActionCtxT. Spock
+    -- 0.10.0.1 is the newest version at the moment of writing.
 
   if impl(GHC >= 7.9)
     cpp-options:        -DAPPLICATIVE_MONAD

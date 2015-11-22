@@ -1,6 +1,14 @@
 {-# LANGUAGE CPP #-}
 {-# LANGUAGE NoImplicitPrelude #-}
 {-# LANGUAGE OverloadedStrings #-}
+
+#if MIN_VERSION_Spock(0,9,0)
+#define ActionCtxT_  ActionCtxT ctx
+-- Since version 0.9.0.0 ActionT was superseded by ActionCtxT.
+#else
+#define ActionCtxT_  ActionT
+#endif
+
 -- |
 -- Module:       $HEADER$
 -- Description:  HTTP authentication framework for Spock
@@ -46,7 +54,17 @@ import qualified Data.Text.Encoding as Text (decodeUtf8, encodeUtf8)
 
 import Data.ByteString.Base64 as Base64 (decodeLenient)
 import Network.HTTP.Types.Status (unauthorized401)
-import Web.Spock.Shared (ActionT, header, setHeader, setStatus, text)
+import Web.Spock.Shared
+#if MIN_VERSION_Spock(0,9,0)
+    ( ActionCtxT
+#else
+    ( ActionT
+#endif
+    , header
+    , setHeader
+    , setStatus
+    , text
+    )
 
 import Web.Spock.HttpAuth.Internal
     ( AuthScheme(AuthBasic, AuthDigest, AuthOther)
@@ -66,11 +84,11 @@ requireAuth
     -> (cred -> m (Maybe info))
     -- ^ Verify credentials and possibly return further information, e.g. user
     -- data retrieved from database.
-    -> ActionT m a
+    -> ActionCtxT_ m a
     -- ^ Action performed on authentication failure.
-    -> (info -> ActionT m a)
+    -> (info -> ActionCtxT_ m a)
     -- ^ Action performed on authentication success.
-    -> ActionT m a
+    -> ActionCtxT_ m a
 requireAuth parseCred verifyCred onAuthFailed action = do
     maybeAuthHeader <- authorizationHeader
     case maybeAuthHeader of
@@ -111,7 +129,7 @@ basicAuthFailed
     => Text
     -- ^ Authorization realm, See also
     -- <https://tools.ietf.org/html/rfc2617#section-1.2 RFC 2617: 1.2 Access Authentication Framework>
-    -> ActionT m a
+    -> ActionCtxT_ m a
 basicAuthFailed realm = do
     setStatus unauthorized401
     setHeader "WWW-Authenticate" $ "Basic realm=\"" <> realm <> "\""
