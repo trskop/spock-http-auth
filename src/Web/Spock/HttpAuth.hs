@@ -57,7 +57,7 @@ import Web.Spock.HttpAuth.Internal
 -- {{{ Generic HTTP Authentication --------------------------------------------
 
 -- | Parametrised authentication boilerplate. Should work for both Basic and
--- Digest authentication, as well as any other, custom defined, authentication.
+-- Digest authentication, as well as any other custom defined authentication.
 requireAuth
     :: MonadIO m
     => (AuthScheme -> Text -> Maybe cred)

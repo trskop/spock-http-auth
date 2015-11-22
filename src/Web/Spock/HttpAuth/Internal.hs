@@ -15,7 +15,9 @@
 -- Portability:  CPP, DeriveDataTypeable, DeriveGeneric, NoImplicitPrelude,
 --               OverloadedStrings, TupleSections
 --
--- Generic HTTP authentication parsing and serialization.
+-- Generic HTTP authentication parsing and serialization. This module strictly
+-- follows <http://tools.ietf.org/html/rfc2616 RFC 2616: HTTP/1.1> and
+-- <http://tools.ietf.org/html/rfc2617 RFC 2617: HTTP Authentication>.
 module Web.Spock.HttpAuth.Internal
     (
     -- * HTTP Authentication Scheme
@@ -76,9 +78,11 @@ data AuthScheme
     , Typeable
     )
 
--- | Get 'Text' representation of 'AuthScheme'. Result Basic and Digest
--- Authentication Scheme is @\"Basic\"@ and @\"Digest\"@, respectively. For
--- @'AuthOther' someAuth@ it is the value @someAuth@ unwrapped from 'CI'.
+-- | Get 'Text' representation of 'AuthScheme'. Result for 'AuthBasic' and
+-- 'AuthDigest' is corresponding Authentication Scheme from HTTP vocabulary,
+-- i.e. @\"Basic\"@ and @\"Digest\"@, respectively. For @'AuthOther' someAuth@
+-- it is the value @someAuth@ unwrapped from 'CI' as original case unfolded
+-- value.
 showAuthScheme :: AuthScheme -> Text
 showAuthScheme AuthBasic          = "Basic"
 showAuthScheme AuthDigest         = "Digest"
@@ -97,7 +101,23 @@ serializeAuthorizationHeaderValue
 serializeAuthorizationHeaderValue scheme credentials =
     showAuthScheme scheme <> " " <> credentials
 
--- | Parse value of @Authorization@ header.
+
+
+-- | Parse value of @Authorization@ header. In example, if we have header like
+-- this:
+--
+-- @
+-- Authorization: Basic QWxhZGRpbjpvcGVuIHNlc2FtZQ==
+-- @
+--
+-- this function parses the value portion of the above HTTP header:
+--
+-- >>> parseAuthorizationHeaderValue "Basic QWxhZGRpbjpvcGVuIHNlc2FtZQ=="
+-- Just (AuthBasic, "QWxhZGRpbjpvcGVuIHNlc2FtZQ==")
+--
+-- Notice that the /credentials portion/ is kept unchanged, not even Base64
+-- decoded, since that encoding may not be used by custom authentication
+-- scheme.
 --
 -- Relevant parts of
 -- <http://tools.ietf.org/html/rfc2617#section-1.2 RFC 2617: HTTP Authentication: Basic and Digest Access Authentication: 1.2 Access Authentication Framework>
@@ -122,7 +142,22 @@ parseAuthorizationHeaderValue input = (,credentials) <$> maybeScheme
     (maybeScheme, credentials) = parseAuthScheme *** Text.dropWhile (== ' ')
         <<< Text.break (== ' ') $ input
 
--- | Parse authentication scheme portion of @Authorization@ header.
+-- | Parse authentication scheme portion of @Authorization@ header. In example,
+-- if we have header like this:
+--
+-- @
+-- Authorization: Basic QWxhZGRpbjpvcGVuIHNlc2FtZQ==
+-- @
+--
+-- this function parses /Authentication Scheme portion/ of the value part of
+-- the above HTTP header:
+--
+-- >>> parseAuthScheme "Basic"
+-- Just AuthBasic
+--
+-- Note that this function checks if /Authentication Scheme portion/ is
+-- correctly formated and contains only allowed characters. If it is not, then
+-- 'Nothing' is returned.
 --
 -- Relevant parts of
 -- <http://tools.ietf.org/html/rfc2617#section-1.2 RFC 2617: HTTP Authentication: Basic and Digest Access Authentication: 1.2 Access Authentication Framework>
